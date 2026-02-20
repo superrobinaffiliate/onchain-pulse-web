@@ -1,10 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react'
 import VisualPulse from '../components/VisualPulse'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { TrendingUp, Globe, Layers, ArrowRight, Activity, Terminal } from 'lucide-react'
+import { Button } from "@/components/ui/card" 
+import { ArrowRight, Zap, Shield, Search } from 'lucide-react'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -13,99 +11,109 @@ export default function Home() {
   if (!mounted) return <div className="min-h-screen bg-black" />
 
   return (
-    <div className="relative min-h-screen bg-black text-slate-100 font-sans antialiased selection:bg-primary selection:text-black">
+    <div className="relative min-h-screen bg-black text-white font-sans antialiased selection:bg-primary selection:text-black">
+      {/* El Pulso - Fondo 3D */}
       <VisualPulse />
       
-      {/* Glow Superior */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/10 blur-[120px] pointer-events-none z-0" />
+      {/* Gradiente de fondo sutil */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black/10 via-black/40 to-black pointer-events-none z-10" />
 
-      {/* Nav Pro */}
-      <nav className="relative z-50 flex justify-between items-center p-6 lg:px-20 max-w-[1600px] mx-auto border-b border-white/5 backdrop-blur-2xl">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(243,156,18,0.4)]">
-            <Terminal size={24} className="text-black" />
-          </div>
-          <span className="text-2xl font-black italic tracking-tighter uppercase">OnChain Pulse</span>
+      {/* Nav Minimalista */}
+      <nav className="relative z-50 flex justify-between items-center p-8 lg:px-20 max-w-[1600px] mx-auto">
+        <div className="text-2xl font-black italic tracking-tighter uppercase text-primary">OnChain Pulse</div>
+        <div className="hidden lg:flex items-center gap-16 text-[10px] font-bold tracking-[0.5em] text-zinc-600 uppercase">
+          <span className="hover:text-primary transition-all">Alpha</span>
+          <span className="hover:text-primary transition-all">Vault</span>
+          <span className="hover:text-primary transition-all">Terminal</span>
         </div>
-        
-        <div className="hidden lg:flex items-center gap-12 text-[11px] font-bold tracking-[0.4em] text-slate-500 uppercase">
-          {['Intelligence', 'Ecosystem', 'Capital'].map((item) => (
-            <span key={item} className="cursor-pointer hover:text-primary transition-all hover:tracking-[0.5em]">
-              {item}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-6">
-          <Badge variant="outline" className="hidden md:flex border-primary/30 text-primary bg-primary/5 px-4 py-1.5 gap-2 animate-pulse font-mono font-bold">
-            <div className="w-2 h-2 bg-primary rounded-full" /> NODE_ALPHA_01
-          </Badge>
-          <Button className="rounded-xl font-black px-8 hover:scale-105 transition-all">CONNECT</Button>
-        </div>
+        <button className="bg-white text-black px-8 py-2 rounded-full font-black text-xs uppercase tracking-widest hover:bg-primary transition-all">
+          Connect
+        </button>
       </nav>
 
-      {/* Hero Pro */}
-      <section className="relative z-10 flex flex-col items-center justify-center pt-40 pb-32 px-6 text-center max-w-7xl mx-auto">
-        <div className="mb-10">
-           <Badge className="px-6 py-2 text-[10px] tracking-[0.3em] uppercase font-black bg-white/5 border-white/10 text-slate-400 backdrop-blur-md">
-             Global Access Protocol Enabled
-           </Badge>
-        </div>
-
-        <h1 className="text-7xl md:text-[10rem] font-black tracking-[-0.06em] leading-[0.8] uppercase mb-10">
-          The <span className="text-primary italic drop-shadow-[0_0_50px_rgba(243,156,18,0.5)]">Ultimate</span> <br/>
+      {/* Hero Elevated */}
+      <section className="relative z-20 flex flex-col items-center justify-center pt-20 pb-32 px-6 text-center max-w-7xl mx-auto">
+        <h1 className="text-7xl md:text-[11rem] font-black tracking-[-0.07em] leading-[0.8] uppercase mb-12">
+          The <span className="text-primary italic">Ultimate</span> <br/>
           Crypto Hub
         </h1>
 
-        <p className="text-xl md:text-3xl text-slate-400 max-w-4xl font-extralight leading-relaxed mb-16 px-4">
-          Nerve center for Web3 intelligence. We aggregate liquid data, audit hyper-growth opportunities, and deliver the pulse of the decentralized economy.
+        <p className="text-xl md:text-2xl text-zinc-500 max-w-3xl font-light leading-relaxed mb-16">
+          The definitive nerve center for Web3 intelligence. We aggregate data, audit opportunities, and deliver the pulse of the decentralized economy.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-8 w-full sm:w-auto">
-          <Button size="lg" className="h-20 px-16 rounded-2xl font-black text-xl uppercase tracking-widest gap-4 shadow-[0_20px_40px_rgba(243,156,18,0.2)] hover:shadow-[0_20px_60px_rgba(243,156,18,0.4)] transition-all">
-            ENTER TERMINAL <ArrowRight size={28} />
-          </Button>
-          <Button size="lg" variant="outline" className="h-20 px-16 rounded-2xl font-bold text-xl uppercase tracking-widest border-white/10 bg-white/5 backdrop-blur-3xl hover:bg-white/10 transition-all">
-            EXPLORE
-          </Button>
+        <div className="flex flex-col sm:flex-row gap-6">
+          <button className="h-16 px-12 bg-primary text-black rounded-2xl font-black text-lg uppercase tracking-tighter flex items-center gap-4 hover:scale-105 transition-all shadow-[0_0_40px_rgba(243,156,18,0.2)]">
+            ENTER TERMINAL <ArrowRight size={24} />
+          </button>
         </div>
       </section>
 
-      {/* Grid de Elite */}
-      <section className="relative z-10 grid md:grid-cols-3 gap-10 max-w-[1400px] mx-auto px-6 pb-60">
-        {[
-          { 
-            icon: <TrendingUp size={32} className="text-primary"/>, 
-            title: "Market Alpha", 
-            desc: "Institutional analysis on trending assets using proprietary AI modeling." 
-          },
-          { 
-            icon: <Globe size={32} className="text-primary"/>, 
-            title: "Web3 Mastery", 
-            desc: "Master the new internet economy with curated high-yield insights." 
-          },
-          { 
-            icon: <Layers size={32} className="text-primary"/>, 
-            title: "OnChain Integrity", 
-            desc: "Only audited, high-prestige recommendations pass our pulse check." 
-          }
-        ].map((item, i) => (
-          <Card key={i} className="bg-zinc-950/20 border-white/5 rounded-[3rem] p-4 backdrop-blur-3xl hover:border-primary/40 transition-all duration-700 group shadow-2xl">
-            <CardHeader className="p-10 pb-6">
-              <div className="w-16 h-16 bg-zinc-900/50 rounded-2xl flex items-center justify-center mb-8 border border-white/5 group-hover:border-primary/50 group-hover:bg-primary/5 transition-all duration-700">
-                {item.icon}
+      {/* SECCIÓN NUEVA: Live Pulse Scanner */}
+      <section className="relative z-20 max-w-6xl mx-auto px-6 mb-40">
+        <div className="w-full bg-zinc-950/50 border border-white/5 rounded-[3rem] p-12 backdrop-blur-3xl overflow-hidden relative">
+          {/* Efecto de Pulso de Escaneo */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary/20 animate-[scan_4s_linear_infinite] z-0" />
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="text-left max-w-md">
+              <div className="flex items-center gap-2 text-primary mb-4">
+                <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
+                <span className="text-xs font-black uppercase tracking-widest">Live Pulse Stream</span>
               </div>
-              <CardTitle className="text-3xl font-black uppercase tracking-tighter text-white">{item.title}</CardTitle>
-            </CardHeader>
-            <CardContent className="p-10 pt-0">
-              <p className="text-slate-500 text-xl leading-snug font-light group-hover:text-slate-200 transition-colors duration-700">{item.desc}</p>
-            </CardContent>
-          </Card>
-        ))}
+              <h2 className="text-4xl font-black uppercase tracking-tighter mb-6 leading-none">Scanning for Alpha.</h2>
+              <p className="text-zinc-500 text-lg leading-snug">Our engine processes real-time on-chain liquidity to detect institutional movements before they hit the charts.</p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 w-full md:w-auto">
+              {[
+                { label: 'Volume 24h', value: '.2B' },
+                { label: 'Active Nodes', value: '128' },
+                { label: 'Alpha Score', value: '98.2' },
+                { label: 'Sec Audits', value: 'Ready' }
+              ].map((stat, i) => (
+                <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl flex flex-col">
+                  <span className="text-[10px] font-bold text-zinc-600 uppercase mb-1">{stat.label}</span>
+                  <span className="text-2xl font-black text-white tabular-nums">{stat.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Footer Fade */}
-      <div className="fixed bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none z-20" />
+      {/* SECCIÓN NUEVA: The Arsenal (Donde venderemos) */}
+      <section className="relative z-20 max-w-7xl mx-auto px-6 pb-60">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl font-black uppercase tracking-tighter">Elite <span className="text-primary italic">Arsenal</span></h2>
+          <p className="text-zinc-500 mt-4 uppercase text-xs font-bold tracking-[0.3em]">Audited recommendation layer</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { icon: <Search />, title: "Precision Search", desc: "Find audited protocols with verified yield potential." },
+            { icon: <Shield />, title: "Security First", desc: "Hardware and software protection for the modern whale." },
+            { icon: <Zap />, title: "Instant Alpha", desc: "Direct access to gated opportunities and private rounds." }
+          ].map((item, i) => (
+            <div key={i} className="group p-10 bg-zinc-900/30 border border-white/5 rounded-[2.5rem] hover:border-primary/40 transition-all duration-700 backdrop-blur-sm">
+              <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform">
+                {item.icon}
+              </div>
+              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">{item.title}</h3>
+              <p className="text-zinc-500 text-lg leading-snug font-light group-hover:text-zinc-300 transition-colors">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Estilos Extra para la Animación de Escaneo */}
+      <style jsx global>{`
+        @keyframes scan {
+          0% { top: 0; opacity: 0; }
+          50% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+      `}</style>
     </div>
   )
 }
