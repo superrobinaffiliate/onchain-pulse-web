@@ -6,9 +6,9 @@
   :root {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 210 40% 98%;
-    --popover: 0 0% 3%;
+    --popover: 0 0% 2%;
     --popover-foreground: 210 40% 98%;
     --primary: 38 92% 50%;
     --primary-foreground: 0 0% 0%;
@@ -23,6 +23,11 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 38 92% 50%;
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
+}
+
+body {
+  background-color: black;
+  color: white;
 }
