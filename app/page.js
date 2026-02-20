@@ -3,34 +3,13 @@ import { useState, useEffect } from 'react'
 import VisualPulse from '../components/VisualPulse'
 import Footer from '../components/Footer'
 import { ArrowRight, BarChart3, Search, Shield, Zap } from 'lucide-react'
-import { supabase } from '../lib/supabase'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  const [alphaLogs, setAlphaLogs] = useState([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setMounted(true)
-    fetchAlpha()
   }, [])
-
-  async function fetchAlpha() {
-    try {
-      const { data, error } = await supabase
-        .from('memory_logs')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(5)
-      
-      if (error) throw error
-      setAlphaLogs(data || [])
-    } catch (err) {
-      console.error('Error fetching alpha:', err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   if (!mounted) return <div className="min-h-screen bg-black" />
 
@@ -76,35 +55,20 @@ export default function Home() {
                 <span className="text-xs font-black uppercase tracking-[0.3em]">Live Alpha Terminal</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Connected to Cerebro_v2</span>
+                <div className="w-2 h-2 bg-primary/40 rounded-full" />
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Awaiting Verified Feed...</span>
               </div>
             </div>
             <div className="space-y-4">
-              {loading ? (
-                <div className="text-zinc-700 font-mono text-sm">Initializing secure data stream...</div>
-              ) : alphaLogs.length > 0 ? (
-                alphaLogs.map((log) => (
-                  <div key={log.id} className="group flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-2xl hover:border-primary/20 transition-all">
-                    <div className="flex flex-col gap-1">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-mono text-primary uppercase">[{log.category}]</span>
-                        <span className="text-zinc-500 text-[10px]">{new Date(log.created_at).toLocaleTimeString()}</span>
-                      </div>
-                      <p className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors">{log.content}</p>
-                    </div>
-                    <ArrowRight size={14} className="text-zinc-700 group-hover:text-primary transition-colors" />
-                  </div>
-                ))
-              ) : (
-                <div className="text-zinc-700 font-mono text-sm italic">No alpha detected in the last cycle. Waiting for volatility...</div>
-              )}
+              <div className="text-zinc-700 font-mono text-sm italic py-10 border-t border-white/5">
+                Scanning on-chain liquidity... Data feed restricted to authorized members only.
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative z-20 max-w-7xl mx-auto px-6 pb-60">
+      <section className="relative z-20 max-w-7xl mx-auto px-6 pb-60 text-left">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-black uppercase tracking-tighter">Elite <span className="text-primary italic">Arsenal</span></h2>
           <p className="text-zinc-500 mt-4 uppercase text-xs font-bold tracking-[0.3em]">Audited recommendation layer</p>
@@ -115,7 +79,7 @@ export default function Home() {
             { icon: <Shield />, title: "Security First", desc: "Hardware and software protection for the modern whale." },
             { icon: <Zap />, title: "Instant Alpha", desc: "Direct access to gated opportunities and private rounds." }
           ].map((item, i) => (
-            <div key={i} className="group p-10 bg-zinc-900/30 border border-white/5 rounded-[2.5rem] hover:border-primary/40 transition-all duration-700 backdrop-blur-sm text-left">
+            <div key={i} className="group p-10 bg-zinc-900/30 border border-white/5 rounded-[2.5rem] hover:border-primary/40 transition-all duration-700 backdrop-blur-sm">
               <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform">
                 {item.icon}
               </div>
