@@ -2,11 +2,35 @@
 import { useState, useEffect } from 'react'
 import VisualPulse from '../components/VisualPulse'
 import Footer from '../components/Footer'
-import { ArrowRight, Zap, Shield, Search } from 'lucide-react'
+import { ArrowRight, Zap, Shield, Search, BarChart3 } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [alphaLogs, setAlphaLogs] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setMounted(true)
+    fetchAlpha()
+  }, [])
+
+  async function fetchAlpha() {
+    try {
+      const { data, error } = await supabase
+        .from('memory_logs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5)
+      
+      if (error) throw error
+      setAlphaLogs(data || [])
+    } catch (err) {
+      console.error('Error fetching alpha:', err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (!mounted) return <div className="min-h-screen bg-black" />
 
@@ -49,33 +73,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Live Pulse Scanner */}
+      {/* Live Alpha Terminal - New Dynamic Section */}
       <section className="relative z-20 max-w-6xl mx-auto px-6 mb-40">
         <div className="w-full bg-zinc-950/50 border border-white/5 rounded-[3rem] p-12 backdrop-blur-3xl overflow-hidden relative">
           <div className="absolute top-0 left-0 w-full h-1 bg-primary/20 animate-[scan_4s_linear_infinite] z-0" />
           
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="text-left max-w-md">
-              <div className="flex items-center gap-2 text-primary mb-4">
-                <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
-                <span className="text-xs font-black uppercase tracking-widest">Live Pulse Stream</span>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center gap-3 text-primary">
+                <BarChart3 size={24} />
+                <span className="text-xs font-black uppercase tracking-[0.3em]">Live Alpha Terminal</span>
               </div>
-              <h2 className="text-4xl font-black uppercase tracking-tighter mb-6 leading-none">Scanning for Alpha.</h2>
-              <p className="text-zinc-500 text-lg leading-snug">Our engine processes real-time on-chain liquidity to detect institutional movements before they hit the charts.</p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Connected to Cerebro_v2</span>
+              </div>
             </div>
-            
-            <div className="grid grid-cols-2 gap-4 w-full md:w-auto">
-              {[
-                { label: 'Volume 24h', value: '.2B' },
-                { label: 'Active Nodes', value: '128' },
-                { label: 'Alpha Score', value: '98.2' },
-                { label: 'Sec Audits', value: 'Ready' }
-              ].map((stat, i) => (
-                <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl flex flex-col">
-                  <span className="text-[10px] font-bold text-zinc-600 uppercase mb-1">{stat.label}</span>
-                  <span className="text-2xl font-black text-white tabular-nums">{stat.value}</span>
-                </div>
-              ))}
+
+            <div className="space-y-4">
+              {loading ? (
+                <div className="text-zinc-700 font-mono text-sm">Initializing secure data stream...</div>
+              ) : alphaLogs.length > 0 ? (
+                alphaLogs.map((log) => (
+                  <div key={log.id} className="group flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-2xl hover:border-primary/20 transition-all">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-mono text-primary uppercase">[{log.category}]</span>
+                        <span className="text-zinc-500 text-[10px]">{new Date(log.created_at).toLocaleTimeString()}</span>
+                      </div>
+                      <p className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors">{log.content}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className={`h-1 w-12 rounded-full \${log.importance >= 4 ? 'bg-primary' : 'bg-zinc-800'}`} />
+                      <ArrowRight size={14} className="text-zinc-700 group-hover:text-primary transition-colors" />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-zinc-700 font-mono text-sm italic">No alpha detected in the last cycle. Waiting for volatility...</div>
+              )}
             </div>
           </div>
         </div>
@@ -107,13 +143,13 @@ export default function Home() {
 
       <Footer />
 
-      <style jsx global>{`
+      <style jsx global>{\`
         @keyframes scan {
           0% { top: 0; opacity: 0; }
           50% { opacity: 1; }
           100% { top: 100%; opacity: 0; }
         }
-      `}</style>
+      \`}</style>
     </div>
   )
 }
