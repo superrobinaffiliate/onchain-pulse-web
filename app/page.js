@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react'
 import VisualPulse from '../components/VisualPulse'
-import { Button } from "@/components/ui/card" 
+import Footer from '../components/Footer'
 import { ArrowRight, Zap, Shield, Search } from 'lucide-react'
 
 export default function Home() {
@@ -22,9 +22,9 @@ export default function Home() {
       <nav className="relative z-50 flex justify-between items-center p-8 lg:px-20 max-w-[1600px] mx-auto">
         <div className="text-2xl font-black italic tracking-tighter uppercase text-primary">OnChain Pulse</div>
         <div className="hidden lg:flex items-center gap-16 text-[10px] font-bold tracking-[0.5em] text-zinc-600 uppercase">
-          <span className="hover:text-primary transition-all">Alpha</span>
-          <span className="hover:text-primary transition-all">Vault</span>
-          <span className="hover:text-primary transition-all">Terminal</span>
+          <span className="hover:text-primary transition-all cursor-pointer">Alpha</span>
+          <span className="hover:text-primary transition-all cursor-pointer">Vault</span>
+          <span className="hover:text-primary transition-all cursor-pointer">Terminal</span>
         </div>
         <button className="bg-white text-black px-8 py-2 rounded-full font-black text-xs uppercase tracking-widest hover:bg-primary transition-all">
           Connect
@@ -49,10 +49,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN NUEVA: Live Pulse Scanner */}
+      {/* Live Pulse Scanner */}
       <section className="relative z-20 max-w-6xl mx-auto px-6 mb-40">
         <div className="w-full bg-zinc-950/50 border border-white/5 rounded-[3rem] p-12 backdrop-blur-3xl overflow-hidden relative">
-          {/* Efecto de Pulso de Escaneo */}
           <div className="absolute top-0 left-0 w-full h-1 bg-primary/20 animate-[scan_4s_linear_infinite] z-0" />
           
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
@@ -82,7 +81,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN NUEVA: The Arsenal (Donde venderemos) */}
+      {/* The Arsenal */}
       <section className="relative z-20 max-w-7xl mx-auto px-6 pb-60">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-black uppercase tracking-tighter">Elite <span className="text-primary italic">Arsenal</span></h2>
@@ -106,7 +105,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Estilos Extra para la Animación de Escaneo */}
+      <Footer />
+
       <style jsx global>{`
         @keyframes scan {
           0% { top: 0; opacity: 0; }
