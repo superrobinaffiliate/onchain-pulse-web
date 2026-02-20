@@ -1,0 +1,20 @@
+<svg width="1500" height="500" viewBox="0 0 1500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1500" height="500" fill="#050505"/>
+  
+  <!-- Grid de fondo -->
+  <defs>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" stroke-width="0.5" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1500" height="500" fill="url(#grid)" />
+
+  <!-- Texto de Autoridad -->
+  <text x="750" y="240" font-family="Arial, sans-serif" font-weight="900" font-size="80" fill="#f39c12" text-anchor="middle" letter-spacing="10" style="font-style: italic;">ONCHAIN PULSE</text>
+  <text x="750" y="300" font-family="Arial, sans-serif" font-weight="300" font-size="20" fill="white" text-anchor="middle" letter-spacing="15" opacity="0.4 uppercase">NERVE CENTER FOR WEB3 INTELLIGENCE</text>
+  
+  <!-- Elementos de "Escaneo" laterales -->
+  <rect x="100" y="100" width="200" height="300" stroke="#f39c12" stroke-width="1" opacity="0.1"/>
+  <rect x="1200" y="100" width="200" height="300" stroke="#f39c12" stroke-width="1" opacity="0.1"/>
+  <line x1="0" y1="250" x2="1500" y2="250" stroke="#f39c12" stroke-width="0.5" opacity="0.2"/>
+</svg>
