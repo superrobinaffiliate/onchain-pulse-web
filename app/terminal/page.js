@@ -1,27 +1,31 @@
 "use client"
 import { useState, useEffect } from 'react'
 import Footer from '../../components/Footer'
-import { Radar, ArrowLeft, BarChart3, Lock, Zap, ExternalLink, ShieldCheck } from 'lucide-react'
+import { Radar, ArrowLeft, BarChart3, ShieldCheck, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-)
+// Inicializar cliente Supabase solo si existen las variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null
 
 export default function Terminal() {
   const [mounted, setMounted] = useState(false)
   const [signals, setSignals] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     setMounted(true)
-    fetchSignals()
-    
-    // Auto-refresh every 30s
-    const interval = setInterval(fetchSignals, 30000)
-    return () => clearInterval(interval)
+    if (supabase) {
+      fetchSignals()
+      const interval = setInterval(fetchSignals, 30000)
+      return () => clearInterval(interval)
+    } else {
+      setLoading(false)
+      setError("Missing Connection Keys")
+    }
   }, [])
 
   async function fetchSignals() {
@@ -32,9 +36,11 @@ export default function Terminal() {
         .order('created_at', { ascending: false })
         .limit(5)
       
+      if (error) throw error
       if (data) setSignals(data)
     } catch (e) {
       console.error("Error fetching signals", e)
+      setError(e.message)
     } finally {
       setLoading(false)
     }
@@ -49,7 +55,7 @@ export default function Terminal() {
           <div className="p-2 bg-white/5 rounded-full group-hover:bg-primary/20 transition-colors">
             <ArrowLeft size={16} />
           </div>
-          <span className="text-xs font-bold uppercase tracking-widest">Hub v2.1</span>
+          <span className="text-xs font-bold uppercase tracking-widest">Hub v2.2 (Unlocked)</span>
         </Link>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
@@ -58,6 +64,13 @@ export default function Terminal() {
       </nav>
 
       <main className="max-w-[1800px] mx-auto p-4 lg:p-8 pb-40">
+        {/* Debug Info (Visible only if error) */}
+        {error && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-400 font-mono text-xs">
+            SYSTEM ALERT: {error}. Check Vercel ENV Variables.
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           
           {/* Main Signal Feed */}
@@ -72,14 +85,12 @@ export default function Terminal() {
 
              <div className="grid gap-4">
                 {loading ? (
-                  // Skeleton Loading
                   [1,2,3].map(i => (
                     <div key={i} className="h-24 bg-zinc-900/50 rounded-2xl animate-pulse" />
                   ))
                 ) : signals.length > 0 ? (
                   signals.map((signal) => (
                     <div key={signal.id} className="group relative bg-zinc-900/40 border border-white/5 hover:border-primary/50 rounded-3xl p-6 transition-all hover:bg-zinc-900/80 flex flex-col md:flex-row justify-between items-center gap-6 overflow-hidden">
-                      {/* Background Glow */}
                       <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                       
                       <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
@@ -131,7 +142,6 @@ export default function Terminal() {
              </div>
           </div>
 
-          {/* Sidebar Stats */}
           <div className="space-y-4">
              <div className="p-6 bg-zinc-900/30 border border-white/5 rounded-3xl sticky top-24">
                 <div className="flex items-center gap-3 text-zinc-400 mb-6">
@@ -150,7 +160,6 @@ export default function Terminal() {
                      </div>
                    ))}
                 </div>
-                
                 <div className="mt-6 pt-6 border-t border-white/5">
                   <p className="text-[10px] text-zinc-600 leading-relaxed mb-4">
                     Data is sourced from on-chain liquidity pools. Copy-trading involves risk. Use our verified tools for execution.
@@ -165,10 +174,8 @@ export default function Terminal() {
                 </div>
              </div>
           </div>
-
         </div>
       </main>
-
       <Footer />
     </div>
   )
