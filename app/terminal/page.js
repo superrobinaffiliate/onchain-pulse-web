@@ -84,6 +84,31 @@ export default function Terminal() {
           ))}
         </div>
 
+        {/* Quick-Start Guide (NEW) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-b border-white/5 py-6">
+           <div className="flex items-center gap-4 px-4">
+              <div className="p-3 bg-white/5 rounded-full text-zinc-400"><Radar size={20} /></div>
+              <div>
+                 <h4 className="text-xs font-black uppercase tracking-widest text-white">1. Identify</h4>
+                 <p className="text-[10px] text-zinc-500 font-mono">Spot high-confidence signals (>80%)</p>
+              </div>
+           </div>
+           <div className="flex items-center gap-4 px-4 border-l border-white/5">
+              <div className="p-3 bg-green-500/10 rounded-full text-green-500"><Activity size={20} /></div>
+              <div>
+                 <h4 className="text-xs font-black uppercase tracking-widest text-white">2. Verify</h4>
+                 <p className="text-[10px] text-zinc-500 font-mono">Check Inflow Volume (Green = Buy)</p>
+              </div>
+           </div>
+           <div className="flex items-center gap-4 px-4 border-l border-white/5">
+              <div className="p-3 bg-primary/10 rounded-full text-primary"><Zap size={20} /></div>
+              <div>
+                 <h4 className="text-xs font-black uppercase tracking-widest text-white">3. Execute</h4>
+                 <p className="text-[10px] text-zinc-500 font-mono">Click 'Snipe on TG' for instant entry</p>
+              </div>
+           </div>
+        </div>
+
         {/* Signals Section */}
         <div className="flex flex-col gap-6">
            <div className="flex items-end justify-between border-b border-white/5 pb-4">
