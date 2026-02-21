@@ -119,7 +119,7 @@ export default function Terminal() {
                           className="flex-1 md:flex-none h-12 px-6 bg-primary text-black rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(243,156,18,0.3)]"
                         >
                           <Zap size={14} className="fill-black" />
-                          Snipe Fast
+                          Snipe on TG
                         </a>
                         <a 
                           href="https://www.mexc.com/acquisition/custom-sign-up?shareCode=mexc-onchainpuls"
@@ -128,7 +128,7 @@ export default function Terminal() {
                           className="flex-1 md:flex-none h-12 px-6 bg-zinc-800 text-white border border-white/10 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-zinc-700 transition-all flex items-center justify-center gap-2"
                         >
                           <ShieldCheck size={14} />
-                          Trade Safe
+                          Trade on CEX
                         </a>
                       </div>
                     </div>
