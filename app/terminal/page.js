@@ -49,7 +49,7 @@ export default function Terminal() {
           <div className="p-2 bg-white/5 rounded-full group-hover:bg-primary/20 transition-colors">
             <ArrowLeft size={16} />
           </div>
-          <span className="text-xs font-bold uppercase tracking-widest">Hub</span>
+          <span className="text-xs font-bold uppercase tracking-widest">Hub v2.1</span>
         </Link>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
